@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --primary: #0b1426;
+  --accent: #00d4a3;
+  --accent-dark: #00a882;
+  --amber: #f59e0b;
 }
 
 @theme inline {
@@ -12,15 +16,121 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0b1426; }
+::-webkit-scrollbar-thumb { background: #00d4a3; border-radius: 4px; }
+
+/* ── Hero Background ── */
+.hero-bg {
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(0, 212, 163, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 10%, rgba(0, 212, 163, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 90%, rgba(245, 158, 11, 0.06) 0%, transparent 40%),
+    #0b1426;
+}
+
+/* ── Grid Pattern Overlay ── */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0   rgba(0, 212, 163, 0.5); }
+  70%  { box-shadow: 0 0 0 14px rgba(0, 212, 163, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(0, 212, 163, 0); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.65s ease both;
+}
+.animate-fade-up-1 {
+  animation: fadeInUp 0.65s ease 0.1s both;
+}
+.animate-fade-up-2 {
+  animation: fadeInUp 0.65s ease 0.2s both;
+}
+.animate-fade-up-3 {
+  animation: fadeInUp 0.65s ease 0.35s both;
+}
+.animate-fade-up-4 {
+  animation: fadeInUp 0.65s ease 0.5s both;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2.5s ease-in-out infinite;
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #00d4a3 0%,
+    #ffffff 40%,
+    #00d4a3 60%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3.5s linear infinite;
+}
+
+/* ── Card hover lift ── */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Accent border glow ── */
+.glow-border {
+  box-shadow: 0 0 0 1px rgba(0, 212, 163, 0.4), 0 8px 32px rgba(0, 212, 163, 0.12);
 }
