@@ -1,8 +1,10 @@
 "use client";
+ 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
  
+/* ── Navbar ─────────────────────────────── */
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -13,9 +15,9 @@ function Navbar() {
   }, []);
   const links = [
     { label: "How It Works", href: "/#how-it-works" },
-    { label: "Tasks", href: "/#tasks" },
-    { label: "Pricing", href: "/pricing" },
-    { label: "FAQ", href: "/faq" },
+    { label: "Tasks",        href: "/#tasks"        },
+    { label: "Pricing",      href: "/pricing"       },
+    { label: "FAQ",          href: "/faq"           },
   ];
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[#0b1426]/95 backdrop-blur-md shadow-lg" : "bg-transparent"}`}>
@@ -28,7 +30,7 @@ function Navbar() {
           {links.map(l => <li key={l.label}><Link href={l.href} className="text-sm font-medium text-slate-300 hover:text-[#00d4a3] transition-colors">{l.label}</Link></li>)}
         </ul>
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/login" className="text-sm text-slate-300 hover:text-white px-4 py-2">Log In</Link>
+          <Link href="/login"  className="text-sm text-slate-300 hover:text-white px-4 py-2">Log In</Link>
           <Link href="/signup" className="text-sm font-semibold bg-[#00d4a3] hover:bg-[#00c494] text-[#0b1426] px-5 py-2 rounded-lg transition-all">Sign Up Free</Link>
         </div>
         <button onClick={() => setOpen(v => !v)} className="md:hidden flex flex-col gap-[5px] p-2">
@@ -41,7 +43,7 @@ function Navbar() {
         <ul className="px-4 py-4 flex flex-col gap-1">
           {links.map(l => <li key={l.label}><Link href={l.href} onClick={() => setOpen(false)} className="block text-slate-300 hover:text-[#00d4a3] py-3 px-3 rounded-lg">{l.label}</Link></li>)}
           <li className="pt-3 border-t border-white/10 flex flex-col gap-2">
-            <Link href="/login" onClick={() => setOpen(false)} className="block text-center text-slate-300 py-2.5 rounded-lg border border-white/20">Log In</Link>
+            <Link href="/login"  onClick={() => setOpen(false)} className="block text-center text-slate-300 py-2.5 rounded-lg border border-white/20">Log In</Link>
             <Link href="/signup" onClick={() => setOpen(false)} className="block text-center font-semibold bg-[#00d4a3] text-[#0b1426] py-2.5 rounded-lg">Sign Up Free</Link>
           </li>
         </ul>
@@ -50,11 +52,12 @@ function Navbar() {
   );
 }
  
+/* ── Footer ─────────────────────────────── */
 function Footer() {
   const cols = {
     Platform: [{ label: "How It Works", href: "/#how-it-works" }, { label: "Task Catalog", href: "/#tasks" }, { label: "Pricing", href: "/pricing" }, { label: "Dashboard", href: "/dashboard" }],
-    Company:  [{ label: "About Us", href: "/about" }, { label: "Blog", href: "/blog" }, { label: "Careers", href: "/careers" }, { label: "Contact", href: "/contact" }],
-    Support:  [{ label: "FAQ", href: "/faq" }, { label: "Help Center", href: "#" }, { label: "Privacy Policy", href: "/privacy" }, { label: "Terms of Use", href: "/terms" }],
+    Company:  [{ label: "About Us",  href: "/about"   }, { label: "Blog",     href: "/blog"    }, { label: "Careers", href: "/careers" }, { label: "Contact", href: "/contact" }],
+    Support:  [{ label: "FAQ",       href: "/faq"     }, { label: "Help Center", href: "#"     }, { label: "Privacy Policy", href: "/privacy" }, { label: "Terms of Use", href: "/terms" }],
   };
   return (
     <footer className="bg-[#060d1a] border-t border-white/10">
@@ -83,41 +86,84 @@ function Footer() {
   );
 }
  
-/* ══════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    TEAM DATA
-   ─────────────────────────────────────────────────────
-   HOW TO ADD A REAL PHOTO FOR ANY TEAM MEMBER:
-   1. Save the image to:  public/team/firstname.jpg
-      (recommended size: 400 × 400 px, square crop)
-   2. In the object below, change:
-         imageSrc: null
-      to:
-         imageSrc: "/team/firstname.jpg"
-   The coloured initials avatar disappears automatically
-   and the real photo renders in its place.
-══════════════════════════════════════════════════════ */
+   ───────────────────────────────────────────────────────────────
+   imageSrc currently points to https://i.pravatar.cc placeholder
+   photos — they load instantly with no local files needed.
+ 
+   ┌─────────────────────────────────────────────────────────┐
+   │  TO REPLACE WITH YOUR REAL TEAM PHOTOS:                  │
+   │  1. Save photo to:  public/team/firstname.jpg            │
+   │     (recommended: 400 × 400 px, square crop)             │
+   │  2. Change the imageSrc value, e.g.:                     │
+   │       "https://i.pravatar.cc/400?img=33"                 │
+   │     becomes:                                             │
+   │       "/team/marcus.jpg"                                 │
+   │  That's all — the <Image> component does the rest.       │
+   └─────────────────────────────────────────────────────────┘
+══════════════════════════════════════════════════════════════ */
 const TEAM = [
-  { name: "Marcus Ellis",  role: "Co-Founder & CEO",         bio: "Former product lead at a Fortune 500 tech company. Built TaskNest to democratise access to remote income globally.",                         imageSrc: null as string | null, initials: "ME", color: "#3b82f6" },
-  { name: "Aisha Osei",   role: "Co-Founder & COO",         bio: "10+ years in remote workforce development. Passionate about creating fair, accessible earning opportunities worldwide.",                     imageSrc: null as string | null, initials: "AO", color: "#8b5cf6" },
-  { name: "Daniel Krause",role: "Head of Engineering",       bio: "Full-stack engineer with a background in fintech. Ensures every task payout is fast, secure, and reliable.",                               imageSrc: null as string | null, initials: "DK", color: "#00d4a3" },
-  { name: "Priya Nair",   role: "Head of Task Quality",      bio: "Curates every task on the platform to ensure fair pay, clear instructions, and a great worker experience.",                                imageSrc: null as string | null, initials: "PN", color: "#f59e0b" },
-  { name: "Leo Ferreira", role: "Growth & Partnerships",     bio: "Connects TaskNest with global enterprise clients who need high-quality human-reviewed data at scale.",                                      imageSrc: null as string | null, initials: "LF", color: "#ef4444" },
-  { name: "Sarah Mbeki",  role: "Community & Support Lead",  bio: "Leads the worker success team. If you've ever emailed support and received a warm, helpful reply — it was probably Sarah.",               imageSrc: null as string | null, initials: "SM", color: "#ec4899" },
+  {
+    name:     "Marcus Ellis",
+    role:     "Co-Founder & CEO",
+    bio:      "Former product lead at a Fortune 500 tech company. Built TaskNest to democratise access to remote income globally.",
+    imageSrc: "https://i.pravatar.cc/400?img=33",
+    /* ← swap to "/team/marcus.jpg" once you have the real photo */
+  },
+  {
+    name:     "Aisha Osei",
+    role:     "Co-Founder & COO",
+    bio:      "10+ years in remote workforce development. Passionate about creating fair, accessible earning opportunities worldwide.",
+    imageSrc: "https://i.pravatar.cc/400?img=47",
+    /* ← swap to "/team/aisha.jpg" */
+  },
+  {
+    name:     "Daniel Krause",
+    role:     "Head of Engineering",
+    bio:      "Full-stack engineer with a background in fintech. Ensures every task payout is fast, secure, and reliable.",
+    imageSrc: "https://i.pravatar.cc/400?img=12",
+    /* ← swap to "/team/daniel.jpg" */
+  },
+  {
+    name:     "Priya Nair",
+    role:     "Head of Task Quality",
+    bio:      "Curates every task on the platform to ensure fair pay, clear instructions, and a great worker experience.",
+    imageSrc: "https://i.pravatar.cc/400?img=44",
+    /* ← swap to "/team/priya.jpg" */
+  },
+  {
+    name:     "Leo Ferreira",
+    role:     "Growth & Partnerships",
+    bio:      "Connects TaskNest with global enterprise clients who need high-quality human-reviewed data at scale.",
+    imageSrc: "https://i.pravatar.cc/400?img=15",
+    /* ← swap to "/team/leo.jpg" */
+  },
+  {
+    name:     "Sarah Mbeki",
+    role:     "Community & Support Lead",
+    bio:      "Leads the worker success team. If you've ever emailed support and received a warm, helpful reply — it was probably Sarah.",
+    imageSrc: "https://i.pravatar.cc/400?img=56",
+    /* ← swap to "/team/sarah.jpg" */
+  },
 ];
  
 const VALUES = [
-  { emoji: "⚖️", title: "Fair Pay",       desc: "Every task is reviewed to ensure it pays a fair rate for the time and skill required. No undercutting, ever." },
-  { emoji: "🌍", title: "Global Access",  desc: "We actively build for workers in emerging markets. Great opportunities shouldn't be geography-gated."           },
-  { emoji: "🔒", title: "Trust & Safety", desc: "Secure payments, transparent task requirements, and a support team that always has your back."                  },
-  { emoji: "⚡", title: "Fast Payouts",   desc: "Basic members paid within 48 hrs, Premium within 24 hrs. Your money, on time, every time."                     },
+  { emoji: "⚖️", title: "Fair Pay",       desc: "Every task is reviewed to ensure it pays a fair rate for the time and skill required. No undercutting, ever."   },
+  { emoji: "🌍", title: "Global Access",  desc: "We actively build for workers in emerging markets. Great opportunities shouldn't be geography-gated."             },
+  { emoji: "🔒", title: "Trust & Safety", desc: "Secure payments, transparent task requirements, and a support team that always has your back."                    },
+  { emoji: "⚡", title: "Fast Payouts",   desc: "Basic members paid within 48 hrs, Premium within 24 hrs. Your money, on time, every time."                       },
 ];
  
+/* ═══════════════════════════════════════════
+   PAGE
+═══════════════════════════════════════════ */
 export default function AboutPage() {
   return (
     <>
       <Navbar />
  
-      {/* Hero */}
+      {/* ── Hero ── */}
       <section className="hero-bg grid-overlay pt-32 pb-20 relative overflow-hidden">
         <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-[#00d4a3]/10 blur-3xl" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
@@ -132,15 +178,24 @@ export default function AboutPage() {
         </div>
       </section>
  
-      {/* Mission */}
+      {/* ── Mission + Stats ── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <span className="inline-block text-[#00d4a3] text-xs font-bold uppercase tracking-widest mb-3">Our Mission</span>
-              <h2 className="text-4xl font-black text-[#0b1426] mb-5 leading-tight">Making remote income accessible to everyone, everywhere.</h2>
-              <p className="text-slate-500 leading-relaxed mb-4">We partner with enterprises, research institutions, and AI companies that need high-quality human judgment — and route that work to our community of skilled remote workers at fair, transparent rates.</p>
-              <p className="text-slate-500 leading-relaxed">No opaque algorithms. No race to the bottom on pricing. Just clear tasks, clear pay, and a platform that grows with you.</p>
+              <h2 className="text-4xl font-black text-[#0b1426] mb-5 leading-tight">
+                Making remote income accessible to everyone, everywhere.
+              </h2>
+              <p className="text-slate-500 leading-relaxed mb-4">
+                We partner with enterprises, research institutions, and AI companies that need high-quality
+                human judgment — and route that work to our community of skilled remote workers at fair,
+                transparent rates.
+              </p>
+              <p className="text-slate-500 leading-relaxed">
+                No opaque algorithms. No race to the bottom on pricing. Just clear tasks, clear pay,
+                and a platform that grows with you.
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-5">
               {[
@@ -159,7 +214,7 @@ export default function AboutPage() {
         </div>
       </section>
  
-      {/* Values */}
+      {/* ── Values ── */}
       <section className="py-20 bg-[#f1f5f9]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -178,53 +233,66 @@ export default function AboutPage() {
         </div>
       </section>
  
-      {/* Team */}
+      {/* ── Team ── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <span className="inline-block text-[#00d4a3] text-xs font-bold uppercase tracking-widest mb-3">The People Behind It</span>
             <h2 className="text-4xl font-black text-[#0b1426]">Meet the Team</h2>
-            <p className="mt-3 text-slate-500 max-w-xl mx-auto">A small, remote-first team spread across three continents — all obsessed with making TaskNest the most trusted earning platform on the internet.</p>
+            <p className="mt-3 text-slate-500 max-w-xl mx-auto text-sm leading-relaxed">
+              A small, remote-first team spread across three continents — all obsessed with making TaskNest
+              the most trusted earning platform on the internet.
+            </p>
           </div>
  
-          {/* ┌──────────────────────────────────────────────────────────────┐
-              │  TEAM PHOTO INSTRUCTIONS                                      │
-              │  ─────────────────────────────────────────────────────────── │
-              │  To add a real photo for any person:                          │
-              │  1. Save image to:  public/team/firstname.jpg  (400×400 px)   │
-              │  2. In TEAM array above, change:  imageSrc: null              │
-              │     to:  imageSrc: "/team/firstname.jpg"                      │
-              │  The initials avatar hides and the photo appears automatically│
-              └──────────────────────────────────────────────────────────────┘ */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TEAM.map(({ name, role, bio, imageSrc, initials, color }) => (
-              <div key={name} className="bg-[#f8fafc] border border-slate-100 rounded-2xl p-7 card-hover text-center">
+            {TEAM.map(({ name, role, bio, imageSrc }) => (
+              <div key={name} className="bg-[#f8fafc] border border-slate-100 rounded-2xl p-7 card-hover text-center group">
+ 
+                {/* ── Photo ── */}
                 <div className="flex justify-center mb-5">
-                  {imageSrc ? (
-                    <div className="relative h-24 w-24 rounded-2xl overflow-hidden shadow-md ring-2 ring-[#00d4a3]/30">
-                      <Image src={imageSrc} alt={name} fill className="object-cover" />
-                    </div>
-                  ) : (
-                    <div className="h-24 w-24 rounded-2xl flex items-center justify-center shadow-md text-white font-black text-2xl" style={{ background: color }}>
-                      {initials}
-                    </div>
-                  )}
+                  <div className="relative h-28 w-28 rounded-2xl overflow-hidden shadow-lg ring-2 ring-transparent group-hover:ring-[#00d4a3]/40 transition-all duration-300">
+                    <Image
+                      src={imageSrc}
+                      alt={`Photo of ${name}`}
+                      fill
+                      sizes="112px"
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
+ 
+                {/* ── Info ── */}
                 <h3 className="font-black text-[#0b1426] text-lg mb-0.5">{name}</h3>
                 <p className="text-[#00d4a3] text-xs font-bold uppercase tracking-wide mb-3">{role}</p>
                 <p className="text-slate-500 text-sm leading-relaxed">{bio}</p>
               </div>
             ))}
           </div>
+ 
+          {/* ── How to add more members note ── */}
+          <div className="mt-10 bg-[#f1f5f9] border border-slate-200 rounded-2xl p-5 max-w-2xl mx-auto text-center">
+            <p className="text-slate-500 text-sm">
+              <span className="font-semibold text-[#0b1426]">Adding a new team member?</span>{" "}
+              Copy any object in the <code className="bg-slate-200 px-1.5 py-0.5 rounded text-xs">TEAM</code> array
+              at the top of this file, update the fields, and set{" "}
+              <code className="bg-slate-200 px-1.5 py-0.5 rounded text-xs">imageSrc</code> to{" "}
+              <code className="bg-slate-200 px-1.5 py-0.5 rounded text-xs">&quot;/team/firstname.jpg&quot;</code> once
+              you have their photo.
+            </p>
+          </div>
         </div>
       </section>
  
-      {/* CTA */}
-      <section className="hero-bg grid-overlay py-20">
-        <div className="max-w-2xl mx-auto px-4 text-center">
+      {/* ── CTA ── */}
+      <section className="hero-bg grid-overlay py-20 relative overflow-hidden">
+        <div className="max-w-2xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl font-black text-white mb-4">Join Our Growing Community</h2>
           <p className="text-slate-400 mb-8">Thousands of workers trust TaskNest every day. Your next earning opportunity is waiting.</p>
-          <Link href="/signup" className="inline-flex items-center gap-2 bg-[#00d4a3] hover:bg-[#00c494] text-[#0b1426] font-black px-10 py-4 rounded-xl text-base transition-all shadow-xl shadow-[#00d4a3]/25 hover:scale-[1.03]">
+          <Link
+            href="/signup"
+            className="inline-flex items-center gap-2 bg-[#00d4a3] hover:bg-[#00c494] text-[#0b1426] font-black px-10 py-4 rounded-xl text-base transition-all shadow-xl shadow-[#00d4a3]/25 hover:scale-[1.03]"
+          >
             Get Started Free →
           </Link>
         </div>
